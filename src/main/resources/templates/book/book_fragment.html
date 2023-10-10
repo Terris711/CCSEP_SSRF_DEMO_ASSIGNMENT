@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="content" class="col-sm-2">
+	<div class="col">
+		<div>
+			<a th:href="@{'/books/' + ${book.alias}}">
+				<img src="https://orion-uploads.openroadmedia.com/sm_f7e651-tolkien-lordoftherings.jpg" style="width: 142px; height: 214px;" />
+				<br/>
+				<b>[[${book.name}]]</b>
+			</a>
+		</div>
+	</div>			
+</div>
+
+
+</body>
+</html>

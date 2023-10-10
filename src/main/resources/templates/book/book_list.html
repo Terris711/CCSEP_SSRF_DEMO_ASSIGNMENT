@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeLeaf.org/thymeLeaf-extras-springsecurit5">
+
+<head th:replace="fragments :: page_head(${pageTitle}, 'none')" />
+
+<body style="background-color: #FF8F59; ">
+	<div class="container-fluid" style="background-color: white; ">
+		<div th:replace="navigation :: header_menu"></div>
+		<div th:replace="navigation :: search_nav"></div>
+
+		<div>
+			<div class="container">
+			<h1>All Books</h1>
+			<div class="row">&nbsp;</div>
+				<div class="row">
+					<th:block th:each="book : ${listBooks}">
+						<div class="col">
+							<div>
+								<img src="https://orion-uploads.openroadmedia.com/sm_f7e651-tolkien-lordoftherings.jpg"  width="180" height ="250" />
+								<br />
+								<a th:href="@{'/books/' + ${book.alias}}"><b>[[${book.name}]]</b></a>
+							</div>
+							<div>
+							</div>
+							<div >
+								<span style="font-size: larger; color: darkred">
+								</span>
+								<del>
+									<span>
+									</span>
+								</del>
+							</div>
+
+						</div>
+					</th:block>
+				</div>
+
+			</div>
+
+		</div>
+		
+		<div th:replace="fragments :: pagination('/books', 'author')"></div>
+		
+		<div th:replace="navigation :: footer_menu"></div>
+	</div>
+</body>
+
+</html>

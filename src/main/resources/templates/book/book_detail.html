@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeLeaf.org/thymeLeaf-extras-springsecurit5">
+
+<head th:replace="fragments :: page_head(${pageTitle}, 'none')" />
+
+<body>
+<div class="container-fluid">
+	<div th:replace="navigation :: header_menu"></div>
+	<div th:replace="navigation :: search_nav"></div>
+	
+	<div th:replace="breadcrumb :: content"></div>
+	
+	<div class="row">
+		<div class="col text-center">
+			<div>
+				<img src="https://orion-uploads.openroadmedia.com/sm_f7e651-tolkien-lordoftherings.jpg" class="img-fluid" />
+			</div>		
+		</div>
+		
+		<div class="col">
+			<div>
+				<h2>[[${book.name}]]</h2>
+			</div>
+			<div>
+				<a >[[${book.author.name}]]</a>
+			</div>
+		</div>
+	</div>
+	
+	<hr></hr>
+	
+
+	
+	<hr></hr>
+	<div class="container-fluid">
+		<h3>Product Details:</h3>
+	</div>
+			
+	<div class="row">
+		<div class="col">
+			<b style="padding-left: 20px;">Title: </b><span>[[${book.name}]]</span><br>
+			<b style="padding-left: 20px;">Author: </b><span>[[${book.author.name}]]</span><br>
+			<b style="padding-left: 20px;">Publisher: </b><span>[[${book.publisher.name}]]</span><br>
+			<b style="padding-left: 20px;">ISBN: </b><span>[[${book.isbn}]]</span><br>
+			<b style="padding-left: 20px;">Category: </b><span>[[${book.category.name}]]</span><br>
+		</div>
+
+	</div>
+	<button onclick="sendEndpointUrl()">Stock</button>
+	<div id="bookDetails"></div>
+	<div th:replace="fragments :: modal_dialog"></div>	
+	<div th:replace="navigation :: footer_menu" ></div>
+
+</div>
+<script type="text/javascript">
+	contextPath = "[[@{/}]]";
+	bookId = "[[${book.id}]]";
+	var csrfHeaderName = "[[${_csrf.headerName}]]";
+	var csrfValue = "[[${_csrf.token}]]";
+
+</script>
+
+<script type="text/javascript" th:src="@{/js/common_modal.js}"></script>
+<script type="text/javascript" th:src="@{/js/quantity_control.js}"></script>
+<script type="text/javascript" th:src="@{/js/add_to_cart.js}"></script>
+<script>
+	function sendEndpointUrl() {
+		const endpointUrl = "http://localhost:8080/stock/"; // Construct the endpoint URL using Thymeleaf binding for book id
+		const csrfHeaderName = "[[${_csrf.headerName}]]";
+		const csrfValue = "[[${_csrf.token}]]";
+		fetch('http://localhost:8080/endpoint', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				[csrfHeaderName]: csrfValue
+			},
+			body: JSON.stringify({ url: endpointUrl })
+		})
+				.then(response => response.json())
+				.then(data => {
+					// Update the DOM with the returned stock data
+					document.querySelector('#bookDetails').innerHTML = `Stock: ${data}`;
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+	}
+</script>
+</body>
+	
+</body>
+
+</html>

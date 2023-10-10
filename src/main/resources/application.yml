@@ -1,0 +1,44 @@
+server:
+  port: 8080
+spring:
+  main:
+    allow-circular-references: true
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
+  datasource:
+    hikari:
+      maximum-pool-size: 2
+      minimum-idle: 1
+    password: 15012003
+    url: jdbc:mysql://localhost:3306/ssrf
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    show-sql: false
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+  security:
+    user:
+      password: password
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 672231998645-o67km6c08prst3t43hck0rmq52ta3a5a.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+            - email
+            - profile
+          facebook:
+            client-id: 266460375613901
+            client-secret: 4d97874319c0e36288d640607150b9a0
+            scope:
+            - email
+            - public_profile
+
